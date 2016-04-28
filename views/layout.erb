@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- заголовок сайта -->
+		<title>Site</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- подключаем Bootstrap через CDN -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+ 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) (CDN)-->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+	</head>
+	<body>
+		<div class="container">
+
+			<!-- Наша менюшка  -->
+			<nav class="navbar navbar-default" role="navigation">
+			  <div class="navbar-header">
+			    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			      <span class="sr-only">Toggle navigation</span>
+			      <span class="icon-bar"></span>
+			      <span class="icon-bar"></span>
+			      <span class="icon-bar"></span>
+			    </button>
+			    <a class="navbar-brand" href="/">Site</a>
+			  </div>
+			  <div class="navbar-collapse collapse">
+			    <ul class="nav navbar-nav">
+			      <li><a href="/one">One</a></li>
+			      <li><a href="/two">Two</a></li>
+			      <li><a href="/three">Three</a></li>
+			    </ul>
+			  </div> <!--/.nav-collapse -->
+			</nav>
+
+			<!-- код внедряемый в шаблон  -->
+			<div>
+				<!-- вывод сообщения об ошибке, если оно существует -->
+			      <%if @error && @error.length > 0 then %>
+			          <div class="alert alert-danger"><%=@error%></div>
+			      <% end %>
+			      <%= yield %>
+			</div>
+
+	</div>
+
+ </body>
+</html>
