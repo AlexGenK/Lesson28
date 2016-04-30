@@ -1,4 +1,3 @@
-#encoding: utf-8
 require 'sinatra'
 require 'sinatra/reloader'
 
@@ -9,22 +8,12 @@ end
 
 # главная страница
 get '/' do
-	erb "<h1> Hello! </h1>"
+	erb "<h1>Hello!</h1>"
 end
 
 # 1
-get '/one' do
-	erb "<h2> One </h2>"
-end
-
-# 2
-get '/two' do
-	erb "<h2> Two </h2>"
-end
-
-# 3
-get '/three' do
-	erb "<h2> Three </h2>"
+get '/new' do
+	erb :new
 end
 
 # возвращает сообщение о возможных ошибках. принмимает хеш с парой
