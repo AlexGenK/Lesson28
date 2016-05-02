@@ -9,6 +9,7 @@ configure do
 	$db=SQLite3::Database.new "./database.db"
 	# результаты запроса выводятся в виде хеша
 	$db.results_as_hash = true
+	# создается таблица
 	$db.execute("CREATE  TABLE  IF NOT EXISTS posts (p_id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE, 
 													 p_name VARCHAR, 
 													 p_post VARCHAR, 
@@ -17,7 +18,7 @@ end
 
 # главная страница
 get '/' do
-	erb "<h1>Hello!</h1>"
+	erb :posts
 end
 
 # добавить пост
@@ -29,10 +30,13 @@ end
 post '/new' do
   @name=params[:name]
   @post=params[:post]
+
+  # получение сообщения об ошибке. если есть, то снова вводим,
+  # если нет, то пост записывается в БД и идет перенаправление на главную страницу
   @error=get_error_message({:name=>"Enter your name. ", :post=>"Enter your post"})
   if @error==""
   	$db.execute("INSERT INTO posts (p_name, p_post) VALUES (?, ?)", [@name, @post])
-  	erb "<p>#{@name} add post: #{@post}</p>"
+  	redirect to ('/')
   else
   	erb :new
   end

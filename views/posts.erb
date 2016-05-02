@@ -1,0 +1,15 @@
+<!-- вывод постов на экран -->
+<h2>Posts:</h2>
+
+<!-- пост выбирается из БД -->
+<% $db.execute('SELECT * FROM posts ORDER BY p_date DESC') do |post| %>
+	<div class="panel panel-info">
+	  <div class="panel-heading"><%= post['p_name'] %> wrote at <%= post['p_date'] %></div>
+	  <div class="panel-body">
+	  	<!-- текст поста разбивается на строки -->
+	    <% post['p_post'].split("\n").each do |p_line| %>
+	    	<%= p_line %><br>
+	    <% end %>
+	  </div>
+	</div>
+<% end %>
