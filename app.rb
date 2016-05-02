@@ -1,3 +1,4 @@
+# блог
 require 'sinatra'
 require 'sinatra/reloader'
 
@@ -11,9 +12,21 @@ get '/' do
 	erb "<h1>Hello!</h1>"
 end
 
-# 1
+# добавить пост
 get '/new' do
 	erb :new
+end
+
+# обработчик формы создания поста
+post '/new' do
+  @name=params[:name]
+  @post=params[:post]
+  @error=get_error_message({:name=>"Enter your name. ", :post=>"Enter your post"})
+  if @error==""
+  	erb "<p>#{@name} add post: #{@post}</p>"
+  else
+  	erb :new
+  end
 end
 
 # возвращает сообщение о возможных ошибках. принмимает хеш с парой
