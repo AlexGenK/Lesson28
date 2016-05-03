@@ -10,6 +10,8 @@
 	    <% post['p_post'].split("\n").each do |p_line| %>
 	    	<%= p_line %><br>
 	    <% end %>
+	    <br>
+	    <a href='post/<%= post['p_id'] %>'>Comments</a>
 	  </div>
 	</div>
 <% end %>

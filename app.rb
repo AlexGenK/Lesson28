@@ -26,6 +26,11 @@ get '/new' do
 	erb :new
 end
 
+# детальная информация о посте №:id
+get '/post/:id' do
+	erb "Info about post ##{params[:id]}"
+end
+
 # обработчик формы создания поста
 post '/new' do
   @name=params[:name]
