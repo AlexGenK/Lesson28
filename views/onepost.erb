@@ -1,0 +1,34 @@
+<!-- вывод единичного поста на экран -->
+<h2>Post:</h2>
+
+<!-- пост выбирается из БД -->
+<% post=$db.execute('SELECT * FROM posts WHERE p_id=?', @id)[0] %>
+<div class="panel panel-info">
+  <div class="panel-heading"><%= post['p_name'] %> wrote at <%= post['p_date'] %></div>
+  <div class="panel-body">
+  	<!-- текст поста разбивается на строки -->
+    <% post['p_post'].split("\n").each do |p_line| %>
+    	<%= p_line %><br>
+    <% end %>
+    <hr>
+	<form class="form-horizontal" action="/post/<%= post['p_id'] %>" method="POST">
+	  <div class="form-group">
+	    <label for="inputname" class="col-sm-1 control-label">Name</label>
+	    <div class="col-sm-11">
+	      <input type="text" class="form-control" name="name_c" id="inputname" placeholder="Name" required>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="inputpost" class="col-sm-1 control-label">Comment</label>
+	    <div class="col-sm-11">
+	      <textarea class="form-control" name="comment" id="inputpost" placeholder="Message" rows="8" required></textarea>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-sm-offset-1 col-sm-11">
+	      <button type="submit" class="btn btn-primary">Send</button>
+	    </div>
+	  </div>
+	</form>
+  </div>
+</div>

@@ -28,7 +28,8 @@ end
 
 # детальная информация о посте №:id
 get '/post/:id' do
-	erb "Info about post ##{params[:id]}"
+	@id=params[:id]
+	erb :onepost
 end
 
 # обработчик формы создания поста
