@@ -12,10 +12,14 @@
     	<%= p_line %><br>
     <% end %>
     <hr>
+    <h4>Comments:</h4>
+    <br>
 
     <!-- выбираем все коменты к посту по его @id -->
     <% $db.execute('SELECT * FROM comments WHERE p_id=? ORDER BY c_date DESC', @id) do |comment| %>
-    	<%= comment['c_date'] %> <%= comment['c_name'] %> wrote:<br>
+    	<i> <%= comment['c_date'] %> <%= comment['c_name'] %> wrote:<br> </i>
+
+    	<!-- текст коммента разбивается на строки -->
     	<% comment['c_comment'].split("\n").each do |c_line| %>
     		<%= c_line %><br>
     	<% end %>

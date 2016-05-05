@@ -59,8 +59,9 @@ post '/post/:id' do
 	@id=params[:id]
 	@name_c=params[:name_c]
 	@comment=params[:comment]
-  	# получение сообщения об ошибке. если есть, то снова вводим,
-  	# если нет, то пост записывается в БД и идет перенаправление на главную страницу
+
+  	# получение сообщения об ошибке. если нет, то комментарий записывается в БД и 
+  	# в любом случае идет перенаправление на форму с детальной информацией о посте
   	@error=get_error_message({:name_c=>"Enter your name. ", :comment=>"Enter your comment"})
  	if @error==""
   		$db.execute("INSERT INTO comments (p_id, c_name, c_comment) VALUES (?, ?, ?)", [@id, @name_c, @comment])
