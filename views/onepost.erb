@@ -1,16 +1,28 @@
 <!-- вывод единичного поста на экран -->
 <h2>Post:</h2>
 
-<!-- пост выбирается из БД -->
+<!-- пост выбирается из БД по своему @id-->
 <% post=$db.execute('SELECT * FROM posts WHERE p_id=?', @id)[0] %>
 <div class="panel panel-info">
   <div class="panel-heading"><%= post['p_name'] %> wrote at <%= post['p_date'] %></div>
   <div class="panel-body">
+
   	<!-- текст поста разбивается на строки -->
     <% post['p_post'].split("\n").each do |p_line| %>
     	<%= p_line %><br>
     <% end %>
     <hr>
+
+    <!-- выбираем все коменты к посту по его @id -->
+    <% $db.execute('SELECT * FROM comments WHERE p_id=? ORDER BY c_date DESC', @id) do |comment| %>
+    	<%= comment['c_date'] %> <%= comment['c_name'] %> wrote:<br>
+    	<% comment['c_comment'].split("\n").each do |c_line| %>
+    		<%= c_line %><br>
+    	<% end %>
+    	<hr>
+    <% end %>
+
+    <!-- форма ввода комментария -->
 	<form class="form-horizontal" action="/post/<%= post['p_id'] %>" method="POST">
 	  <div class="form-group">
 	    <label for="inputname" class="col-sm-1 control-label">Name</label>
@@ -19,9 +31,9 @@
 	    </div>
 	  </div>
 	  <div class="form-group">
-	    <label for="inputpost" class="col-sm-1 control-label">Comment</label>
+	    <label for="inputcomment" class="col-sm-1 control-label">Comment</label>
 	    <div class="col-sm-11">
-	      <textarea class="form-control" name="comment" id="inputpost" placeholder="Message" rows="8" required></textarea>
+	      <textarea class="form-control" name="comment" id="inputcomment" placeholder="Message" rows="8" required></textarea>
 	    </div>
 	  </div>
 	  <div class="form-group">

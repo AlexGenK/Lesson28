@@ -9,11 +9,17 @@ configure do
 	$db=SQLite3::Database.new "./database.db"
 	# результаты запроса выводятся в виде хеша
 	$db.results_as_hash = true
-	# создается таблица
+	# создается таблица для хранения постов
 	$db.execute("CREATE  TABLE  IF NOT EXISTS posts (p_id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE, 
 													 p_name VARCHAR, 
 													 p_post VARCHAR, 
 													 p_date DATETIME DEFAULT (datetime('now', 'localtime')))")
+	# создается таблица для хранения комментов к постам
+	$db.execute("CREATE  TABLE  IF NOT EXISTS comments (c_id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE, 
+														p_id INTEGER,
+													 	c_name VARCHAR, 
+													 	c_comment VARCHAR, 
+													 	c_date DATETIME DEFAULT (datetime('now', 'localtime')))")
 end
 
 # главная страница
@@ -46,6 +52,20 @@ post '/new' do
   else
   	erb :new
   end
+end
+
+# обработчик формы ввода комментария
+post '/post/:id' do
+	@id=params[:id]
+	@name_c=params[:name_c]
+	@comment=params[:comment]
+  	# получение сообщения об ошибке. если есть, то снова вводим,
+  	# если нет, то пост записывается в БД и идет перенаправление на главную страницу
+  	@error=get_error_message({:name_c=>"Enter your name. ", :comment=>"Enter your comment"})
+ 	if @error==""
+  		$db.execute("INSERT INTO comments (p_id, c_name, c_comment) VALUES (?, ?, ?)", [@id, @name_c, @comment])
+  	end
+  	erb :onepost
 end
 
 # возвращает сообщение о возможных ошибках. принмимает хеш с парой
